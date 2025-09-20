@@ -1,0 +1,32 @@
+from machine import Pin
+import time
+import urandom
+
+# Setup
+led = Pin(15, Pin.OUT)
+button = Pin(14, Pin.IN, Pin.PULL_UP)  # pressed = 0
+
+while True:
+    input("Press Enter to start the reaction test...")  # optional pacing
+    
+    print("Get ready...")
+    led.value(1)
+    
+    # Wait a random time before turning on the LED
+    delay = urandom.getrandbits(3) + 2  # random 2-9 seconds
+    time.sleep(delay)
+    
+    # Turn LED off — reaction starts here
+    led.value(0)
+    print("LED OFF! Click NOW!")
+    
+    start_time = time.ticks_ms()
+    
+    # Wait for button press
+    while button.value() == 1:
+        pass
+    
+    reaction_time = time.ticks_diff(time.ticks_ms(), start_time)
+    print("Your reaction time: {} milliseconds".format(reaction_time))
+    print("-----------------------------")
+    time.sleep(2)
