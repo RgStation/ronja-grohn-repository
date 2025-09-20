@@ -1,0 +1,46 @@
+from machine import Pin
+import time
+
+red = Pin(15, Pin.OUT)
+yellow = Pin(14, Pin.OUT)
+green = Pin(13, Pin.OUT)
+
+buzzer = Pin(12, Pin.OUT)
+
+button = Pin(16, Pin.IN, Pin.PULL_UP)
+
+def all_off():
+  red.value(0)
+  yellow.value(0)
+  green.value(0)
+  buzzer.value(0)
+
+while True:
+
+  if button.value() == 0:   # Button pressed
+    all_off()
+    red.value(1)
+    buzzer.value(1)
+
+    while button.value() == 0:
+      time.sleep(0.1)
+    buzzer.value(0)
+    red.value(0)
+
+  # Normal cycle
+  red.value(1)
+  time.sleep(3)
+  red.value(0)
+
+  yellow.value(1)
+  time.sleep(1)
+  yellow.value(0)
+
+  green.value(1)
+  time.sleep(2)
+  green.value(0)
+
+  yellow.value(1)
+  time.sleep(1)
+  yellow.value(0)
+
