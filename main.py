@@ -1,11 +1,10 @@
+from machine import Pin
 import time
-time.sleep(0.1) # Wait for USB to become ready
 
-for i in range(10):
-    print(i)
-name = input("Enter your name: ")
+led = Pin("LED", Pin.OUT)
 
-if name == "Clark Kent":
-    print("You are the Superman!")
-else:
-    print("You are an ordinary person.")
+while True:
+    led.value(1)      # Turn LED on
+    time.sleep(1)     # Wait 1 second
+    led.value(0)      # Turn LED off
+    time.sleep(1)     # Wait 1 second
