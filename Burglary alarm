@@ -1,0 +1,29 @@
+from machine import Pin
+import time
+
+# PIR sensor
+pir = Pin(28, Pin.IN)
+
+# Alerts
+led = Pin(16, Pin.OUT)
+buzzer = Pin(17, Pin.OUT)
+
+# Alerts off at start
+led.value(0)
+buzzer.value(0)
+
+print("Burglary alarm active...")
+
+while True:
+    if pir.value() == 1:
+        print("Motion detected!")
+        led.value(1)
+        buzzer.value(1)
+        time.sleep(1)      
+        led.value(0)
+        buzzer.value(0)
+    else:
+        # No motion
+        led.value(0)
+        buzzer.value(0)
+    time.sleep(0.2)
