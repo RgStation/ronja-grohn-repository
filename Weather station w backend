@@ -1,0 +1,44 @@
+import network
+import urequests
+from machine import Pin
+import dht
+import time
+
+ssid = "X"
+password = "X"
+
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect(ssid, password)
+
+print("Connecting to Wi-Fi...", end="")
+while not wlan.isconnected():
+    print(".", end="")
+    time.sleep(0.5)
+print("\nConnected! IP:", wlan.ifconfig()[0])
+
+THINGSPEAK_API_KEY = "LBSZKU012PEJ1DT9"
+THINGSPEAK_URL = "http://api.thingspeak.com/update?api_key=LBSZKU012PEJ1DT9&field1=0"
+
+sensor = dht.DHT22(Pin(15))  # or DHT11
+
+while True:
+    try:
+        # Read sensor
+        sensor.measure()
+        temp = sensor.temperature()
+        hum = sensor.humidity()
+        print("Temperature: {:.1f} C, Humidity: {:.1f}%".format(temp, hum))
+
+        # Send data to ThingSpeak
+        url = "{}?api_key={}&field1={:.1f}&field2={:.1f}".format(
+            THINGSPEAK_URL, THINGSPEAK_API_KEY, temp, hum
+        )
+        response = urequests.get(url)
+        print("ThingSpeak response code:", response.status_code)
+        response.close()
+
+    except OSError as e:
+        print("Failed to read sensor or send data:", e)
+
+    time.sleep(20)
