@@ -1,0 +1,23 @@
+{
+  "name": "ronja-grohn-repository-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RgStation/ronja-grohn-repository.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RgStation/ronja-grohn-repository/issues"
+  },
+  "homepage": "https://github.com/RgStation/ronja-grohn-repository#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
